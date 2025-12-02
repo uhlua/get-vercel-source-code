@@ -8,7 +8,7 @@ const error = chalk.bold.red;
 
 const VERCEL_TOKEN = process.env.VERCEL_TOKEN;
 const VERCEL_DEPLOYMENT = process.argv[2];
-const DESTDIR = process.argv[3] || VERCEL_DEPLOYMENT;
+const DESTDIR = process.argv[3] || `../${VERCEL_DEPLOYMENT}`;
 const VERCEL_TEAM = process.env.VERCEL_TEAM;
 
 try {
@@ -35,9 +35,9 @@ async function main() {
   const deploymentId = VERCEL_DEPLOYMENT.startsWith("dpl_")
     ? VERCEL_DEPLOYMENT
     : await oraPromise(
-        getDeploymentId(VERCEL_DEPLOYMENT),
-        "Getting deployment id"
-      );
+      getDeploymentId(VERCEL_DEPLOYMENT),
+      "Getting deployment id"
+    );
   const srcFiles = await oraPromise(
     getDeploymentSource(deploymentId),
     "Loading source files tree"
